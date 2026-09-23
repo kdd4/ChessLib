@@ -23,6 +23,14 @@ namespace Chess
 
             std::shared_ptr<MovablePiece> clone(std::weak_ptr<Board> board) const override final;
             void getMoves(std::vector<std::shared_ptr<Move>>& vec, bool onlyAttack = false) const override final;
+
+        private: 
+            void forwardMove(std::vector<std::shared_ptr<Move>>& vec) const;
+            void leftMove(std::vector<std::shared_ptr<Move>>& vec) const;
+            void rightMove(std::vector<std::shared_ptr<Move>>& vec) const;
+
+            void captureOnMoveLeft(std::vector<std::shared_ptr<Move>>& vec) const;
+            void captureOnMoveRight(std::vector<std::shared_ptr<Move>>& vec) const;
         };
     }
 }
