@@ -26,6 +26,8 @@ namespace Chess
 
         private:
             bool move(const Position& pos, std::vector<std::shared_ptr<Move>>& vec) const;
+
+            void moveDirection(int dx, int dy, std::vector<std::shared_ptr<Move>>& vec) const;
         };
     }
 }

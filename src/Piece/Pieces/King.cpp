@@ -37,12 +37,13 @@ namespace Chess
             std::shared_ptr<Piece> attacked_place;
             Position move_step;
 
-            for (int ix = -1; ix <= 1; ++ix)
+            for (int dx = -1; dx <= 1; ++dx)
             {
-                for (int iy = -1; iy <= 1; ++iy)
+                for (int dy = -1; dy <= 1; ++dy)
                 {
-                    move_step = {pos.x + ix, pos.y + iy };
-                    if ((ix == 0 && iy == 0) || !move_step.check()) continue;
+                    move_step = {pos.x + dx, pos.y + dy };
+
+                    if ((dx == 0 && dy == 0) || !move_step.check()) continue;
 
                     attacked_place = board.lock()->getPiece(move_step);
                     if (attacked_place != nullptr)
@@ -52,8 +53,10 @@ namespace Chess
                     }
                     
                     move = std::shared_ptr<ImplMove>(new ImplMove(board));
+
                     move->appendStep(pos, move_step);
                     move->appendAttack(move_step);
+
                     vec.push_back(move);
                 }
             }
@@ -102,6 +105,7 @@ namespace Chess
             }
 
             std::shared_ptr<ImplMove> move(new ImplMove(board));
+
             move->appendStep(pos, Position(pos.x - 2, pos.y));
             move->appendStep(figureRook->pos, Position(pos.x - 1, pos.y));
 
@@ -144,6 +148,7 @@ namespace Chess
             }
 
             std::shared_ptr<ImplMove> move(new ImplMove(board));
+
             move->appendStep(pos, Position(pos.x + 2, pos.y));
             move->appendStep(figureRook->pos, Position(pos.x + 1, pos.y));
 

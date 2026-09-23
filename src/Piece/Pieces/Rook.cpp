@@ -33,32 +33,12 @@ namespace Chess
         {
             if (this->deleted) return;
 
-            // X+
-            for (int i = 1; i < 8; ++i)
-            {
-                Position movePos(pos.x + i, pos.y);
-                if (!move(movePos, vec)) break;
-            }
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if ((dx != 0 && dy != 0) || (dx == 0 && dy == 0)) continue;
 
-            // X-
-            for (int i = 1; i < 8; ++i)
-            {
-                Position movePos(pos.x - i, pos.y);
-                if (!move(movePos, vec)) break;
-            }
-
-            // Y+
-            for (int i = 1; i < 8; ++i)
-            {
-                Position movePos(pos.x, pos.y + i);
-                if (!move(movePos, vec)) break;
-            }
-
-            // Y-
-            for (int i = 1; i < 8; ++i)
-            {
-                Position movePos(pos.x, pos.y - i);
-                if (!move(movePos, vec)) break;
+                    moveDirection(dx, dy, vec);
+                }
             }
         }
 
@@ -78,10 +58,20 @@ namespace Chess
 
             move->appendAttack(pos);
             move->appendStep(this->pos, pos);
+
             vec.push_back(move);
 
             return attackedPiece == nullptr;
         }
 
+        void Rook::moveDirection(int dx, int dy, std::vector<std::shared_ptr<Move>>& vec) const
+        {
+            for (int i = 1; i < 8; ++i)
+            {
+                Position movePos(pos.x + dx * i, pos.y + dy * i);
+
+                if (!move(movePos, vec)) break;
+            }
+        }
     }
 }
